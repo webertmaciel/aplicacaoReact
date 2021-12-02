@@ -31,6 +31,7 @@ function Todo() {
     function onAddItem(text) {
         let it = new Item(text);
         setItems([...items, it]);
+        onHideModal();
     }
     function onItemDelete(item) {
         let filteredItems = items.filter(it => it.id != item.id);
@@ -47,14 +48,18 @@ function Todo() {
         setItems(updatedItems);
     }
 
+    function onHideModal() {
+        setShowModal(false);
+    }
+
 
 
     return (<div className="container">
-        <header className='header'><h1>Todo</h1> <button className='addButton'>+</button></header>
-        {/*  */}
+        <header className='header'><h1>Lembretes</h1> <button onClick={() => { setShowModal(true) }} className='addButton'>+</button></header>
+
 
         <List onDone={onDone} onItemDelete={onItemDelete} items={items}></List>
-        <Modal showModal={showModal}>
+        <Modal show={showModal} onHideModal={onHideModal}> Adicione sua Lembrete
             <TodoForm onAddItem={onAddItem}></TodoForm>
         </Modal>
 

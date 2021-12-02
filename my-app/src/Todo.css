@@ -50,8 +50,8 @@ ul{
     align-items: center;
 }
 .cardModal{
-    padding:20px;
-    background-color:white;
+    padding:80px;
+    background-color:rgb(247, 240, 240);
 }
 .hideModal{
     display: none;
