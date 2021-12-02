@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from './components/List'
-import TodoForm from './components/Form'
 import Item from './components/Item'
+import Modal from './components/Modal'
+import TodoForm from './components/Form'
 import './Todo.css';
+
+const SAVED_ITEMS = "savedItems"
+
+
 function Todo() {
 
-
+    const [showModal, setShowModal] = useState(false)
 
     const [items, setItems] = useState([])
+
+    useEffect(() => {
+        let savedItems = JSON.parse(localStorage.getItem(SAVED_ITEMS))
+        if (savedItems) {
+            setItems(savedItems);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(SAVED_ITEMS, JSON.stringify(items))
+
+    }, [items])
 
 
 
@@ -33,10 +50,13 @@ function Todo() {
 
 
     return (<div className="container">
-        <h1>Todo</h1>
-        <TodoForm onAddItem={onAddItem}></TodoForm>
+        <header className='header'><h1>Todo</h1> <button className='addButton'>+</button></header>
+        {/*  */}
 
         <List onDone={onDone} onItemDelete={onItemDelete} items={items}></List>
+        <Modal showModal={showModal}>
+            <TodoForm onAddItem={onAddItem}></TodoForm>
+        </Modal>
 
     </div>)
 
